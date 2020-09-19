@@ -3,25 +3,48 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
-	"github.com/dbarochiya/chatapp/pkg/websocket"
+	"github.com/dbarochiya/chatapp/websocket"
 )
 
-func serveRoot(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "I am root path ")
+var ClientC = 0
+
+func serveWs(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {
+	conn, err := websocket.Upgrade(w, r)
+	if err != nil {
+		fmt.Fprintf(w, "%+v\n", err)
+	}
+	ClientC++
+
+	client := &websocket.Client{
+		ID:   strconv.Itoa(ClientC),
+		Conn: conn,
+		Pool: pool,
+	}
+
+	pool.Register <- client
+	client.Read()
 }
 
-func serveWs(w http.ResponseWriter, r *http.Request) {
-	ws, err := websocket.Upgrade(w, r)
-	if err != nil {
-		fmt.Fprintf(w, "%+V\n", err)
-	}
-	go websocket.Writer(ws)
-	websocket.Reader(ws)
+func setupRoutes() {
+	pool := websocket.NewPool()
+	go pool.Start()
+
+	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		serveWs(pool, w, r)
+	})
+
+	// http.HandleFunc("/createpool/:name", func(w http.ResponseWriter, r *http.Request) {
+	// 	createa a Pool with name (if given otherwise random generator)
+	// })
+
+	// http.HandleFunc("/joinpool/:name", func(w http.ResponseWriter, r *http.Request) {
+	// 	serveWs(pool, w, r)
+	// })
 }
 
 func main() {
-	http.HandleFunc("/root", serveRoot)
-	http.HandleFunc("/ws", serveWs)
+	setupRoutes()
 	http.ListenAndServe(":8080", nil)
 }
