@@ -1,0 +1,14 @@
+.messageBox{
+  display: block;
+}
+.userID{
+  display: inline;
+  color: green;
+}
+.message{
+  display: inline;
+}
+.specialMessage {
+  color: red;
+  display: inline;
+}
