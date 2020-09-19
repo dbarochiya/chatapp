@@ -36,4 +36,4 @@ THis will spin up frontend react server running on `:3000`
   npm start 
 ```
 
-Now go to [localhoat:3000]() in browser and TADA !! 
+Now go to [localhost:3000](localhost:3000) in browser and TADA !! 
