@@ -1,6 +1,6 @@
 # ChatApp 
 
-This is a realtime chatbox implementation where multiple users join in a single chgat pool. I worked on this with motive to learn these cool tech - 
+This is a realtime chatbox implementation where multiple users join in a single chat pool. I have worked on this with a motive to learn these cool techs - 
 
   - backend : [GO](https://golang.org/)
   - frontend : [ReactJs](https://reactjs.org/)
@@ -16,7 +16,7 @@ This is a realtime chatbox implementation where multiple users join in a single 
 
 ## backend
 
-Follow these commands to spin up a go server which listens to port `:8080` and boradcats messages to clients using websocket
+Follow these commands to spin up a go server which listens on port `:8080` and broadcasts messages to clients using websocket.
 
 ```
   (install go if you haven't already)
@@ -27,7 +27,7 @@ Follow these commands to spin up a go server which listens to port `:8080` and b
 
 ## frontend
 
-THis will spin up frontend react server running on `:3000` 
+This will spin up frontend react server running on `:3000` 
 ``` 
  (install npm if you haven't already)
   git clone https://github.com/dbarochiya/chatapp.git
